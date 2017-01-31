@@ -1,0 +1,54 @@
+Synopsis: Data Centres, Regions and Special regions, Design for failure
+
+Cloud - The Cloud is the modern way to create and deploy new IT solutions. It allows us access to resources on demand with no upfront investments.
+
+Cloud - Reduce physical hardware solutions and some softwares using cloud resources, bcoz they provide self-service, on-demand hyper use way.
+
+------------------------------------------------------------AZURE------------------------------------------------------------------------
+Multiple Datacentres distributed all over the world
+Releasing new regions to Expand its coverage all over the world and is upto 30 (as when recording this video)
+
+All datacen managed by Microsoft cloud infra and operaations (formerly global foundation services)
+
+Resiliency - Azure pairs regions and if you replicate your workload across pairs, then you can ensure higher availability than using a single region alone, to reduce natural disasters, power outages.
+
+Azure currently operates in 140 countries, in 10 languages and 24 currencies, and that's because different countries have different needs. 
+
+Another benefit of having worldwide datacenters is reduced latency. If your service is hosted in the West Europe region but most of the traffic comes from the west coast of the U.S., then users will experience slower requests than they need to. So switching it to run in a region closer allows for a better user experience. Alternatively, you could have Azure automatically direct requests to the endpoint with the least latency.
+
+Exception - China, which has a datacenter through third party ISP, since datacentres are not allowed to share data inside or outside of china
+BrazilSouth is not having a paired region in South america but is paired with south central U.S, but South central U.S not paired with brazil(non-reciprocal)
+
+Special govt regions- datacentors tailored to specific govt needs
+
+
+
+SERVICES IN DIFF REGIONS
+
+ Not all services are available in all regions. When a service is rolled out, that service is deployed only to some regions. After an initial period of time, the service goes to mainstream and is declared generally available and then it becomes available to most regions.
+ 
+ 
+ Advantage of cloud over PRAM data centres:
+ 
+ 1. PRAM consists of mean time between failures(MTBF) and to reduce that they req high quality hardware
+ 2. cloud does not require h/w though failure can occur in one of 1000 servers running in azure, as if one node fails , data will be moved to anther node-  resiliency
+ 3. time to recover from failure (MTTR) is low in azure as data can be moved from failed node to running node.
+ 
+ 
+ Azure needs Humans:
+ Though mostly automated, azure needs humans to handle data and to have speciall access to data.
+ Datacenter personnel aren't allowed to just access customer data freely. There are strict policies about customer data management. There are exceptions, for example, if a customer opens up an issue about a service, then support may need to look at your data to help resolve the issue. And in that case, you can grant them access. However, it's going to be limited to a specific time frame and fully monitored.
+ 
+ Fault domains and update domains
+ Both concepts involve groupings of physical machines
+ Every physical machine and the virtual machines inside of it live inside a fault domain and an update domain
+ An update domain is a group of machines that can be updated(rebooted) at the same time. Update refers to microsoft updates
+ During the update process, a machine may become unavailable and so the separate update domains ensure that, in this case, not all of our servers will be down at the same time.
+ 
+ A fault domain is a group of machines that can fail. This typically corresponds to a server rack. They can fail because they share the same power supplies, cooling systems, networking, etc
+ Outages can impact the service-level agreement, usually called an SLA, which is the probability of a service running without outage as a percentage of time during a year. To ensure an SLA of 99.95% for a service running on a VM, you'll need to deploy the service on at least two VMs and those VMs need to be in the same availability set. Two or more VMs can join the same availability set, which ensures that the two machines don't live in the same fault domain or in the same update domain. Using an availability set will mitigate the risk of an outage.
+ 
+ If you have two VMs in the same availability set with different fault domains and you do experience an outage, it's likely that it's due to a regional failure. Now, regional failures aren't common, however they can and do happen, and that's where the cross-region replication we talked about earlier helps.
+ 
+ 
+
