@@ -1,0 +1,64 @@
+Synopsis : IP Address, DNS, Load Balancing, Network Security group, Firewalls , end point config
+
+--------------------------------------------------Virtual Networks-------------------------------------------------------------------
+Virtual Networks - Rpresentation of network in cloud
+
+A virtual network is a representation of a network in the cloud. It is a way to organize and isolate virtual machines controlling addresses, DNS settings, security policies and routing tables
+
+ If we were to set up a virtual network for a simple web application, we might use two subnets. One for the web servers and one for the databases
+ 
+ Each subnet allows us to break out the virtual machines based on their role allowing us to apply the same security rules to all of the VMs in the subnet and using role based subnets is a common practice.
+ 
+ IP Address - A virtual network is defined by an address space
+ Different virtual networks distinguish each other by a set of addresses. 
+ It is a common practice in IP addressing that a private network can have one of three base addresses:
+ 192.168... - 65536 reversable addresses
+ 172.16... - million address
+ 10.... - 16 million address
+ 
+ Creating virtual network:
+ In dashboard:
+ 1. New > Networking > virtual network
+ 2. Deployment mode: Classic (Note: res manager is also available but not included in certi)
+ 3. Type name and subnet name as "FrontendServices"
+ 4. Type resource grp "exam"
+ 5. Location: West central(US)
+ 
+ To check virtual network:
+ In dashboard, Go to click All Resources
+ 
+ To add new subnet for that VN in that res grp:
+ Click subnet > Add > "BackendServices"
+ 
+ Virtual networks are extremely useful since they open up possibilities such as hybrid, on-prem to cloud networks as well as the possibility to allow secure traffic between multiple virtual machines and cloud services within Azure.
+ 
+ ---------------------------------------------------------IP Address----------------------------------------------------------
+ 
+ Virtual machine has an internal IP called Dynamic IP (DIP)
+ Assigned by default by the VN to VM when VM is provisioned
+ Assigned via a DHCP service with near infinite lease
+ However it is lost when VM is stopped or deallocated
+ *DIP is accessible only inside of virtual network
+ *A VM can have multiple virtual network cards and each of them can have its own DIP
+ 
+ ------------------------------------------------------Load Balancer-------------------------------------------------------------
+ 
+ Cloud services - old model- classic deployment model (this is on exam)
+ New ways - load balancer
+ 
+ 1. vm sits behind load balancer
+ 2. load bal - acts as public facing endpoint to the internet - contains public IP address
+ 3. Behing load bal - vm - contains private IP address
+ 4. Traffic route via load bal to vm - specific ports can be opened on load bal and mapped to ports on vm
+ 5. Bypass load bal by creating instance level IP address - will serve as public ip add allowing direct traffic
+ ------------------------------------------------------VMs and Cloud Services----------------------------------------------------------
+ A virtual machine is always created in the context of a cloud service.
+ A cloud service is assigned a public virtual IP or a VIP to be reachable from the internet
+ It has a fully qualified domain name with the format cloud service name dot cloud app dot net in the Azure DNS to be accessible from the internet
+ It is possible to assign a custom domain name to a cloud service using a CNAME record to map the custom domain with Azure's fully qualified domain name
+ It is also possible to use an A record to map custom domain name but with one caveat
+ By default, the virtual IP address is dynamically assigned when the machine is provisioned and it is not guaranteed when the machine is provisioned again after a shutdown. It is a best practice to refer to the fully qualified domain name to ensure that you can actually reach the VM.
+ 
+ 
+ 
+ 
