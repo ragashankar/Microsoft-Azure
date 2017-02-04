@@ -59,6 +59,45 @@ A virtual network is a representation of a network in the cloud. It is a way to 
  It is also possible to use an A record to map custom domain name but with one caveat
  By default, the virtual IP address is dynamically assigned when the machine is provisioned and it is not guaranteed when the machine is provisioned again after a shutdown. It is a best practice to refer to the fully qualified domain name to ensure that you can actually reach the VM.
  
+ ---------------------------------------------------------EndPoints-------------------------------------------------------------
+ Endpoints - public to connect vm thro port mapping to open service to the cloud
+ can be standalone or load balanced
+ Eg: http to connect to vm, we need port mapping (80)
+ 
+ By default vm has 2 end points - RDP 3389 and PowerShell port 5986
+ 
+ standalone - mapping port of public IP to a single dynamic private IP
+ load bal - mapping port of public IP to multiple dynamic private IP (thro Azure loadbal) - Allows for port remapping
+ 
+ ----------------------------------------------------------Access Control List and network security group------------------------------------------------------
+ ACLs - an endpoint is created and all the traffic reaches endpoint. ACLs allow certain traffic to connect from a virtual endpoint and rejects the remaining.
+ Eg: ACLs specify certain access list to RDP and RDP is a default enpt in vm that can lockdown the certain IP address based on the list.
+ 
+ ACLs specify access list to endpts but not to a whole vm or subnets
+ 
+ How ACLs do it?
+ Creates permit and deny rules
+ Permit and deny rules must be in the order of precedence to control traffic correctly
+ 
+ Network sec grp?
+ List of ACL rules that permit or deny n/w traffic.
+ Can have impact over the subnet or grp of vms within the subnet
+ when n/w sec grp is associated with a subnet, then the rules apply to the vm instances wthin the subnet.
+ 
+n/w sce grp is independent from any n/w or vm - top level object
+
+Azure - 3 default tags for mentioning what type of n/w
+Load bal/vm n/w - virtual underscore
+internet tag-  accessed by public
+
+n/w sec grp - contains defaut rules - cannot be deleted - can  be overridden (assigned lowest priority)
+Eg: outbound traffic not restricted, but inbound traff blocked by default. when not using load bal, this can be changes
+
+ACL and n/w sec grp CANNOT coexist in same vm
+
+##Steps for creating network sec grp and vm
+ 
+ 
  
  
  
